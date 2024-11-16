@@ -18,3 +18,9 @@ nix run nix-darwin --extra-experimental-features "nix-command flakes" -- switch 
 darwin-rebuild switch --flake ~/.config/nix#speediest
 ```
 
+
+** Update Flake **
+
+```sh
+nix flake update
+```

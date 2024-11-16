@@ -28,6 +28,32 @@
             (pkgs.nerdfonts.override { fonts = [ "RobotoMono" "SourceCodePro" ]; })
           ];
 
+
+        homebrew = {
+          enable = true;
+
+          brews = [
+            "coreutils"
+            "gcc"
+            "git"
+            "ripgrep"
+          ];
+
+          casks = [
+            "1password-cli"
+            "alfred"
+            "discord"
+            "firefox"
+            "fork"
+            "google-chrome"
+            "ngrok"
+            "orbstack"
+            "slack"
+            "tableplus"
+            "vlc"
+          ];
+        };
+
         system.activationScripts.applications.text =
           let
             env = pkgs.buildEnv {
@@ -49,22 +75,55 @@
             done
           '';
 
+
+        system =
+          {
+            keyboard.enableKeyMapping = true;
+            keyboard.remapCapsLockToControl = true;
+
+            # Set Git commit hash for darwin-version.
+            configurationRevision = self.rev or self.dirtyRev or null;
+
+            # Used for backwards compatibility, please read the changelog before changing.
+            # $ darwin-rebuild changelog
+            stateVersion = 5;
+
+            defaults =
+              {
+                dock.autohide = true;
+                dock.tilesize = 18;
+                dock.persistent-others =
+                  [
+                    "~/Desktop"
+                    "~/Downloads"
+                  ];
+                finder.FXPreferredViewStyle = "clmv";
+                finder.ShowPathbar = true;
+                finder.ShowStatusBar = true;
+                loginwindow.GuestEnabled = false;
+                NSGlobalDomain.KeyRepeat = 2;
+                trackpad.Clicking = true;
+              };
+          };
+
+        security.pam.enableSudoTouchIdAuth = true;
+
         # Auto upgrade nix package and the daemon service.
         services.nix-daemon.enable = true;
-        # nix.package = pkgs.nix;
 
-        # Necessary for using flakes on this system.
-        nix.settings.experimental-features = "nix-command flakes";
+        nix =
+          {
+            package = pkgs.nix;
+            gc.automatic = true;
+            optimise.automatic = true;
+            settings = {
+              experimental-features = [ "nix-command" "flakes" ]; # Necessary for using flakes on this system.
+            };
+          };
 
-        # Enable alternative shell support in nix-darwin.
-        # programs.fish.enable = true;
 
-        # Set Git commit hash for darwin-version.
-        system.configurationRevision = self.rev or self.dirtyRev or null;
-
-        # Used for backwards compatibility, please read the changelog before changing.
-        # $ darwin-rebuild changelog
-        system.stateVersion = 5;
+        # Create /etc/zshrc that loads the nix-darwin environment.
+        programs.zsh.enable = true;
 
         # The platform the configuration will be used on.
         nixpkgs.hostPlatform = "aarch64-darwin";
@@ -83,21 +142,6 @@
               enableRosetta = true;
               user = "cdmwebs";
               autoMigrate = true;
-
-              brews = [ ];
-
-              casks = [
-                "1password-cli"
-                "alfred"
-                "discord"
-                "firefox"
-                "fork"
-                "google-chrome"
-                "ngrok"
-                "slack"
-                "tableplus"
-                "vlc"
-              ];
             };
           }
         ];
