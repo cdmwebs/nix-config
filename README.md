@@ -1,26 +1,26 @@
+### Getting Started
+
+Check for system software updates: Settings > General > Software Updates.
+
+```zsh
+xcode-select --install
+git clone git@github.com:cdmwebs/nix-config.git ~/.config/nix
+```
+
 1. Install nix:
 
-```sh
+```zsh
 sh <(curl -L https://nixos.org/nix/install)
 ```
 
-2. Set up nix-darwin in home directory:
+1. Build nix config:
 
-```sh
-mkdir .config/nix
-cd .config/nix
-nix run nix-darwin --extra-experimental-features "nix-command flakes" -- switch --flake ~/.config/nix#speediest
-```
-
-3. Build nix config:
-
-```sh
+```zsh
 darwin-rebuild switch --flake ~/.config/nix#speediest
 ```
 
-
 ** Update Flake **
 
-```sh
+```zsh
 nix flake update
 ```
