@@ -5,9 +5,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
     let
       configuration = { pkgs, config, ... }: {
         nixpkgs.config.allowUnfree = true;
@@ -72,11 +73,37 @@
     {
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#speediest
-      darwinConfigurations."speediest" = nix-darwin.lib.darwinSystem {
-        modules = [ configuration ];
+      darwinConfigurations.speediest = nix-darwin.lib.darwinSystem {
+        modules = [
+          configuration
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              enableRosetta = true;
+              user = "cdmwebs";
+              autoMigrate = true;
+
+              brews = [ ];
+
+              casks = [
+                "1password-cli"
+                "alfred"
+                "discord"
+                "firefox"
+                "fork"
+                "google-chrome"
+                "ngrok"
+                "slack"
+                "tableplus"
+                "vlc"
+              ];
+            };
+          }
+        ];
       };
 
       # Expose the package set, including overlays, for convenience.
-      darwinPackages = self.darwinConfigurations."speediest".pkgs;
+      darwinPackages = self.darwinConfigurations.speediest.pkgs;
     };
 }
