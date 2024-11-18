@@ -76,7 +76,8 @@
     defaults = {
       dock.autohide = true;
       dock.tilesize = 18;
-      dock.persistent-others = [ "~/Desktop" "~/Downloads" ];
+      dock.persistent-others =
+        [ "/Users/cdmwebs/Desktop" "/Users/cdmwebs/Downloads" ];
       finder.FXPreferredViewStyle = "clmv";
       finder.ShowPathbar = true;
       finder.ShowStatusBar = true;
