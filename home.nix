@@ -282,6 +282,14 @@
       plugins = {
         lualine.enable = true;
         web-devicons.enable = true;
+        copilot-lua = {
+          enable = true;
+          suggestion = {
+            enabled = true;
+            autoTrigger = true;
+            keymap = { accept = "<Tab>"; };
+          };
+        };
 
         treesitter = {
           enable = true;
