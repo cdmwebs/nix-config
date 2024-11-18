@@ -37,6 +37,7 @@
       "meetingbar"
       "ngrok"
       "orbstack"
+      "pop"
       "slack"
       "tableplus"
       "vlc"
