@@ -34,6 +34,7 @@
       "1password-cli"
       "alfred"
       "discord"
+      "expressvpn"
       "firefox"
       "fork"
       "google-chrome"
