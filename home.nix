@@ -16,11 +16,6 @@
     EDITOR = "nvim";
   };
 
-  services.gpg-agent = {
-    enable = true;
-    defaultCacheTtl = 1800;
-    enableSshSupport = true;
-  };
 
   # Let Home Manager install and manage itself.
   programs = {
@@ -112,8 +107,6 @@
       # }];
     };
 
-    gpg = { enable = true; };
-
     git = {
       enable = true;
       userName = "Chris Moore";
@@ -137,6 +130,7 @@
         diff.colorMoved = "default";
         push.default = "simple";
 
+        # Sign using SSH keys via 1Password. Less trouble than gpg.
         gpg = {
           format = "ssh";
           ssh.program =
@@ -163,6 +157,20 @@
 
       initExtraBeforeCompInit = ''
         export CLICOLOR=1
+      '';
+
+      initExtra = ''
+        list_ssh_fingerprints() {
+          for key in ~/.ssh/*.pub; do
+            if [[ -f "$key" ]]; then
+              fingerprint=$(ssh-keygen -lf "$key")
+              echo "$fingerprint ($key)"
+            else
+              echo "No public keys found in ~/.ssh."
+              return 1
+            fi
+          done
+        }
       '';
 
       shellAliases = {
