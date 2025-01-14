@@ -46,6 +46,12 @@
       "tableplus"
       "vlc"
     ];
+
+    masApps = {
+      "Flighty – Live Flight Tracker" = 1358823008;
+      "RadarScope" = 288419283;
+      "Xcode" = 497799835;
+    };
   };
 
   system.activationScripts.applications.text = let
