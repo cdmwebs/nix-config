@@ -15,15 +15,18 @@
     brews = [
       "autoconf"
       "coreutils"
+      "doctl"
       "gcc"
       "git"
       "gmp"
       "libyaml"
+      "mas"
       "mise"
       "openssl@3"
       "readline"
       "ripgrep"
       "rsync"
+      "tree"
     ];
 
     casks = [
