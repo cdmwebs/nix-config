@@ -6,7 +6,8 @@
   environment.systemPackages =
     [ pkgs.alacritty pkgs.mkalias pkgs.neovim pkgs.tmux ];
 
-  fonts.packages = [ pkgs.nerd-fonts._0xproto pkgs.nerd-fonts.droid-sans-mono ];
+  fonts.packages =
+    [ pkgs.nerd-fonts.roboto-mono pkgs.nerd-fonts.sauce-code-pro ];
 
   homebrew = {
     enable = true;
