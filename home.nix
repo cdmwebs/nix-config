@@ -290,6 +290,7 @@
       plugins = {
         lualine.enable = true;
         web-devicons.enable = true;
+
         copilot-lua = {
           enable = true;
           suggestion = {
@@ -307,14 +308,14 @@
               "bash"
               "c"
               "diff"
+              "elixir"
               "html"
+              "jsonc"
               "lua"
               "luadoc"
               "markdown"
               "vim"
               "vimdoc"
-              "jsonc"
-              "elixir"
             ];
             highlight = {
               enable = true;
