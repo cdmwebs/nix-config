@@ -117,7 +117,7 @@
         st = "status";
         cp = "cherry-pick";
       };
-      ignores = [ ".DS_Store" ];
+      ignores = [ ".DS_Store" ".irb_history" ];
       signing = {
         key =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4Ma9yQKOx8Rz4d08ejiqejRYhR5aVGyGfBloBTmOeR";
