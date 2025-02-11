@@ -16,6 +16,20 @@
     EDITOR = "nvim";
   };
 
+  # Rebind detach keys so ctrl-p works for history.
+  # home.file."./.docker/config.json".text = ''
+  #   {
+  #   	"auths": {
+  #   		"https://index.docker.io/v1/": {},
+  #   		"https://index.docker.io/v1/access-token": {},
+  #   		"https://index.docker.io/v1/refresh-token": {},
+  #   		"registry.digitalocean.com": {}
+  #   	},
+  #   	"credsStore": "osxkeychain",
+  #   	"currentContext": "orbstack",
+  #   	"detachKeys": "ctrl-\\"
+  #   }
+  # '';
 
   # Let Home Manager install and manage itself.
   programs = {
