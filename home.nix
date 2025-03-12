@@ -338,6 +338,7 @@
               "lua"
               "luadoc"
               "markdown"
+              "terraform"
               "vim"
               "vimdoc"
             ];
@@ -478,7 +479,7 @@
               lua = [ "stylua" ];
               nix = [ "nixd" ];
               python = [ "black" ];
-              terraform = [ "terraform" ];
+              terraform = [ "tofu_fmt" ];
               typescript = [ "prettierd" ];
             };
           };
