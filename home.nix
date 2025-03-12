@@ -450,15 +450,28 @@
             };
             notify_on_error = false;
             formatters_by_ft = {
+              bash = [ "shfmt" ];
+              elixir = [ "elixirls" ];
+              html = {
+                __unkeyed-1 = "prettierd";
+                __unkeyed-2 = "prettier";
+                stop_after_fist = true;
+              };
+              javascript = {
+                __unkeyed-1 = "prettierd";
+                __unkeyed-2 = "prettier";
+                stop_after_fist = true;
+              };
+              json = {
+                __unkeyed-1 = "prettierd";
+                __unkeyed-2 = "prettier";
+                stop_after_fist = true;
+              };
               lua = [ "stylua" ];
               nix = [ "nixd" ];
-              bash = [ "shfmt" ];
-              javascript = [ "prettierd" ];
+              python = [ "black" ];
+              terraform = [ "terraform" ];
               typescript = [ "prettierd" ];
-              html = [ "prettierd" ];
-              json = [ "prettierd" ];
-              python = [ "isort" "black" ];
-              elixir = [ "elixirls" ];
             };
           };
         };
