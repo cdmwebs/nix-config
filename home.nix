@@ -311,11 +311,18 @@
           settings = {
             suggestion = {
               enabled = true;
-              autoTrigger = true;
-              keymap = { accept = "<Tab>"; };
+              auto_trigger = true;
             };
           };
         };
+
+        # cmp = {
+        #   enable = false;
+        #   settings = {
+        #     experimental = { ghost_text = true; };
+        #     sources = [{ name = "copilot"; }];
+        #   };
+        # };
 
         treesitter = {
           enable = true;
