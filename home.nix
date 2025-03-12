@@ -92,6 +92,7 @@
       enable = true;
       mouse = true;
       sensibleOnTop = false;
+      escapeTime = 0;
       terminal = "screen-256color";
       plugins = with pkgs; [
         tmuxPlugins.better-mouse-mode
