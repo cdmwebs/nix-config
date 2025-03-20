@@ -41,9 +41,15 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               verbose = true;
-              users.cdmwebs.imports =
-                [ ./home.nix nixvim.homeManagerModules.nixvim ];
-
+              users.cdmwebs.imports = [
+                ./home.nix
+                nixvim.homeManagerModules.nixvim
+                ./home/alacritty.nix
+                ./home/git.nix
+                ./home/nixvim.nix
+                ./home/tmux.nix
+                ./home/zsh.nix
+              ];
             };
           }
         ];
