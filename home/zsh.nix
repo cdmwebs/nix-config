@@ -47,10 +47,15 @@
           { name = "agkozak/zsh-z"; }
           { name = "zdharma/fast-syntax-highlighting"; }
           { name = "zsh-users/zsh-completions"; }
-          { name = "zsh-users/zsh-autosuggestions"; }
           {
-            name = "romkatv/powerlevel10k";
-            tags = [ "depth:1" ];
+            name = "zsh-users/zsh-autosuggestions";
+          }
+
+          # Pure prompt
+          { name = "mafredri/zsh-async"; }
+          {
+            name = "sindresorhus/pure";
+            tags = [ "use:pure.zsh" "as:theme" ];
           }
         ];
       };
