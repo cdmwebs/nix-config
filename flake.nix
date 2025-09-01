@@ -43,7 +43,7 @@
               verbose = true;
               users.cdmwebs.imports = [
                 ./home.nix
-                nixvim.homeManagerModules.nixvim
+                nixvim.homeModules.nixvim
                 ./home/alacritty.nix
                 ./home/git.nix
                 ./home/nixvim.nix
