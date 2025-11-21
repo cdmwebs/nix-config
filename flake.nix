@@ -46,7 +46,6 @@
                 nixvim.homeModules.nixvim
                 ./home/alacritty.nix
                 ./home/git.nix
-                ./home/nixvim.nix
                 ./home/tmux.nix
                 ./home/zsh.nix
               ];
