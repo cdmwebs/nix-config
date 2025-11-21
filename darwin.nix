@@ -39,6 +39,7 @@
       "expressvpn"
       "firefox"
       "fork"
+      "ghostty"
       "google-chrome"
       "meetingbar"
       "ngrok"
