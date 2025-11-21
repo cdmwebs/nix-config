@@ -1,15 +1,22 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   nixpkgs.config.allowUnfree = true;
 
   system.primaryUser = "cdmwebs";
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages =
-    [ pkgs.alacritty pkgs.mkalias pkgs.neovim pkgs.tmux ];
+  environment.systemPackages = [
+    pkgs.alacritty
+    pkgs.mkalias
+    pkgs.neovim
+    pkgs.tmux
+  ];
 
-  fonts.packages =
-    [ pkgs.nerd-fonts.roboto-mono pkgs.nerd-fonts.sauce-code-pro ];
+  fonts.packages = [
+    pkgs.nerd-fonts.roboto-mono
+    pkgs.nerd-fonts.sauce-code-pro
+  ];
 
   homebrew = {
     enable = true;
@@ -57,24 +64,26 @@
     };
   };
 
-  system.activationScripts.applications.text = let
-    env = pkgs.buildEnv {
-      name = "system-applications";
-      paths = config.environment.systemPackages;
-      pathsToLink = "/Applications";
-    };
-  in pkgs.lib.mkForce ''
-    # Set up applications
-    		echo "setting up /Applications..." >&2
-    		rm -rf /Applications/Nix\ Apps
-    		mkdir -p /Applications/Nix\ Apps
-    		find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-    		while read -r src; do
-    			app_name=$(basename "$src")
-    				echo "copying $src" >&2
-    				${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
-    				done
-    				'';
+  system.activationScripts.applications.text =
+    let
+      env = pkgs.buildEnv {
+        name = "system-applications";
+        paths = config.environment.systemPackages;
+        pathsToLink = [ "/Applications" ];
+      };
+    in
+    pkgs.lib.mkForce ''
+      # Set up applications
+      		echo "setting up /Applications..." >&2
+      		rm -rf /Applications/Nix\ Apps
+      		mkdir -p /Applications/Nix\ Apps
+      		find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
+      		while read -r src; do
+      			app_name=$(basename "$src")
+      				echo "copying $src" >&2
+      				${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+      				done
+      				'';
 
   system = {
     keyboard.enableKeyMapping = true;
@@ -90,8 +99,10 @@
     defaults = {
       dock.autohide = true;
       dock.tilesize = 18;
-      dock.persistent-others =
-        [ "/Users/cdmwebs/Desktop" "/Users/cdmwebs/Downloads" ];
+      dock.persistent-others = [
+        "/Users/cdmwebs/Desktop"
+        "/Users/cdmwebs/Downloads"
+      ];
       finder.FXPreferredViewStyle = "clmv";
       finder.ShowPathbar = true;
       finder.ShowStatusBar = true;
@@ -115,8 +126,10 @@
     gc.automatic = true;
     optimise.automatic = true;
     settings = {
-      experimental-features =
-        [ "nix-command" "flakes" ]; # Necessary for using flakes on this system.
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ]; # Necessary for using flakes on this system.
     };
   };
 
