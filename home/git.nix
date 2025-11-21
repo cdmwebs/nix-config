@@ -3,21 +3,19 @@
   programs = {
     git = {
       enable = true;
-      userName = "Chris Moore";
-      userEmail = "chris@cdmwebs.com";
-      aliases = {
-        co = "checkout";
-        br = "branch";
-        st = "status";
-        cp = "cherry-pick";
-      };
-      ignores = [ ".DS_Store" ".irb_history" ];
-      signing = {
-        key =
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4Ma9yQKOx8Rz4d08ejiqejRYhR5aVGyGfBloBTmOeR";
-        signByDefault = true;
-      };
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Chris Moore";
+          email = "chris@cdmwebs.com";
+        };
+
+        alias = {
+          co = "checkout";
+          br = "branch";
+          st = "status";
+          cp = "cherry-pick";
+        };
+
         init.defaultBranch = "main";
         push.autoSetupRemote = true;
         pull.rebase = true;

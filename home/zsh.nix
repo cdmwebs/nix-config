@@ -1,4 +1,5 @@
-{ ... }: {
+{ lib, ... }:
+{
   programs = {
     zsh = {
       enable = true;
@@ -13,11 +14,9 @@
         ZSHZ_CASE = "smart";
       };
 
-      initExtraBeforeCompInit = ''
+      initContent = ''
         export CLICOLOR=1
-      '';
 
-      initExtra = ''
         list_ssh_fingerprints() {
           for key in ~/.ssh/*.pub; do
             if [[ -f "$key" ]]; then
