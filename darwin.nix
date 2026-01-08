@@ -101,8 +101,22 @@
       dock.autohide = true;
       dock.tilesize = 18;
       dock.persistent-others = [
-        "/Users/cdmwebs/Desktop"
-        "/Users/cdmwebs/Downloads"
+        {
+          folder = {
+            path = "/Users/cdmwebs/Desktop";
+            displayas = "folder";
+            arrangement = "date-added";
+            showas = "grid";
+          };
+        }
+        {
+          folder = {
+            path = "/Users/cdmwebs/Downloads";
+            arrangement = "date-added";
+            displayas = "folder";
+            showas = "grid";
+          };
+        }
       ];
       finder.FXPreferredViewStyle = "clmv";
       finder.ShowPathbar = true;
