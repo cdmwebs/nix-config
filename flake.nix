@@ -3,8 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
+    nix-homebrew = {
+      url = "github:zhaofengli-wip/nix-homebrew";
+      inputs.brew-src.url = "github:Homebrew/brew/5.0.2";
+    };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,43 +22,52 @@
     };
   };
 
-  outputs = { self, nix-darwin, nix-homebrew, home-manager, nixvim, nixpkgs }: {
-    darwinConfigurations = {
-      imports = [ <home-manager/nix-darwin> ];
-      speediest = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./darwin.nix
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              enable = true;
-              enableRosetta = true;
-              user = "cdmwebs";
-              autoMigrate = true;
-            };
-          }
-          home-manager.darwinModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              verbose = true;
-              users.cdmwebs.imports = [
-                ./home.nix
-                nixvim.homeModules.nixvim
-                ./home/alacritty.nix
-                ./home/git.nix
-                ./home/tmux.nix
-                ./home/zsh.nix
-              ];
-            };
-          }
-        ];
-      };
+  outputs =
+    {
+      self,
+      nix-darwin,
+      nix-homebrew,
+      home-manager,
+      nixvim,
+      nixpkgs,
+    }:
+    {
+      darwinConfigurations = {
+        imports = [ <home-manager/nix-darwin> ];
+        speediest = nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./darwin.nix
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                enableRosetta = true;
+                user = "cdmwebs";
+                autoMigrate = true;
+              };
+            }
+            home-manager.darwinModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                verbose = true;
+                users.cdmwebs.imports = [
+                  ./home.nix
+                  nixvim.homeModules.nixvim
+                  ./home/alacritty.nix
+                  ./home/git.nix
+                  ./home/tmux.nix
+                  ./home/zsh.nix
+                ];
+              };
+            }
+          ];
+        };
 
+      };
+      # Expose the package set, including overlays, for convenience.
+      darwinPackages = self.darwinConfigurations.speediest.pkgs;
     };
-    # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations.speediest.pkgs;
-  };
 }
