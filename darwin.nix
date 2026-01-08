@@ -46,6 +46,7 @@
       "expressvpn"
       "firefox"
       "fork"
+      "fujitsu-scansnap-home"
       "ghostty"
       "google-chrome"
       "meetingbar"
