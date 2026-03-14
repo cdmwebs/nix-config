@@ -7,10 +7,10 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = [
+    # Keep GUI apps here so the activation script can link them into /Applications.
     pkgs.alacritty
     pkgs.mkalias
     pkgs.neovim
-    pkgs.tmux
   ];
 
   fonts.packages = [
@@ -21,21 +21,16 @@
   homebrew = {
     enable = true;
 
+    # Keep Homebrew focused on GUI apps, App Store installs, and toolchain
+    # dependencies that non-Nix tooling often expects under /opt/homebrew.
     brews = [
       "autoconf"
-      "coreutils"
-      "doctl"
       "gcc"
-      "git"
       "gmp"
       "libyaml"
       "mas"
-      "mise"
       "openssl@3"
       "readline"
-      "ripgrep"
-      "rsync"
-      "tree"
     ];
 
     casks = [

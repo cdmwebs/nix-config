@@ -6,8 +6,14 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    tmux
+    coreutils
+    doctl
+    nixd
+    nixfmt-rfc-style
     powerline
+    ripgrep
+    rsync
+    tree
     tmux-mem-cpu-load
   ];
 

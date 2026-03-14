@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 {
   programs = {
     zsh = {
@@ -44,12 +44,6 @@
         enable = true;
         plugins = [
           { name = "agkozak/zsh-z"; }
-          { name = "zdharma/fast-syntax-highlighting"; }
-          { name = "zsh-users/zsh-completions"; }
-          {
-            name = "zsh-users/zsh-autosuggestions";
-          }
-
           # Pure prompt
           { name = "mafredri/zsh-async"; }
           {
