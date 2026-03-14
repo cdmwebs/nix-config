@@ -1,5 +1,5 @@
 {
-  description = "cdmwebs darwin system flake";
+  description = "cdmwebs system and home-manager config";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -20,11 +20,20 @@
 
   outputs =
     {
+      nixpkgs,
       nix-darwin,
       nix-homebrew,
       home-manager,
       ...
     }:
+    let
+      commonHomeModules = [
+        ./home.nix
+        ./home/git.nix
+        ./home/tmux.nix
+        ./home/zsh.nix
+      ];
+    in
     {
       darwinConfigurations = {
         speediest = nix-darwin.lib.darwinSystem {
@@ -46,15 +55,20 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 verbose = true;
-                users.cdmwebs.imports = [
-                  ./home.nix
-                  ./home/git.nix
-                  ./home/tmux.nix
-                  ./home/zsh.nix
-                ];
+                users.cdmwebs.imports = commonHomeModules ++ [ ./home/darwin.nix ];
               };
             }
           ];
+        };
+      };
+
+      homeConfigurations = {
+        cdmwebs = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+          modules = commonHomeModules ++ [ ./home/linux.nix ];
         };
       };
     };

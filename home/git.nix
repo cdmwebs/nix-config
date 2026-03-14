@@ -25,7 +25,6 @@
         # Sign using SSH keys via 1Password. Less trouble than gpg.
         gpg = {
           format = "ssh";
-          ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
         };
       };
       ignores = [

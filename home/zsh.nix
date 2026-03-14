@@ -34,7 +34,6 @@
       shellAliases = {
         l = "ls -lh";
         ll = "ls -lah";
-        switch = "darwin-rebuild switch --flake ~/.config/nix#speediest";
         gst = "git status";
         dcu = "mise exec nodejs@20.17 -- devcontainer up --workspace-folder ./";
         dcr = "mise exec nodejs@20.17 -- devcontainer up --workspace-folder ./ --remove-existing-container";

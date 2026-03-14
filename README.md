@@ -1,18 +1,26 @@
-# macOS Nix Config
+# Nix Config
 
-This repo manages one macOS host, `speediest`, with:
+This repo currently manages:
+
+- one macOS host, `speediest`, with `nix-darwin`
+- one Linux user profile, `cdmwebs`, with standalone Home Manager
+
+The repo uses:
 
 - `nix-darwin` for system settings and activation
 - `home-manager` for user-level programs and dotfiles
 - `nix-homebrew` to keep Homebrew under declarative control
 
-The current target is Apple Silicon macOS (`aarch64-darwin`) for user `cdmwebs`.
+The current targets are Apple Silicon macOS (`aarch64-darwin`) and a Linux Home Manager profile (`x86_64-linux`) for user `cdmwebs`.
 
 ## What Lives Where
 
-- [flake.nix](./flake.nix): flake inputs and the `speediest` host definition
-- [darwin.nix](./darwin.nix): system-level macOS, Nix, fonts, Homebrew, and `/Applications/Nix Apps`
-- [home.nix](./home.nix): user-level CLI packages and Home Manager defaults
+- [flake.nix](./flake.nix): flake inputs, the `speediest` macOS host, and the `cdmwebs` Linux Home Manager profile
+- [darwin.nix](./darwin.nix): system-level macOS composition
+- [modules/darwin/](./modules/darwin): macOS-only system modules
+- [home.nix](./home.nix): shared Home Manager defaults for macOS and Linux
+- [home/darwin.nix](./home/darwin.nix): macOS-only Home Manager settings
+- [home/linux.nix](./home/linux.nix): Linux-only Home Manager settings
 - [home/git.nix](./home/git.nix): Git config and signing
 - [home/tmux.nix](./home/tmux.nix): tmux config
 - [home/zsh.nix](./home/zsh.nix): Zsh config
@@ -23,9 +31,9 @@ Package-management split:
 - Nix/Home Manager: CLI tools, shell config, terminal tools, fonts, Neovim binary, and the checked-in `nvim/` config
 - Homebrew: GUI apps, Mac App Store installs, and a few toolchain dependencies expected under `/opt/homebrew`
 
-## Initial Setup
+## macOS Setup
 
-This repo assumes:
+The macOS host setup assumes:
 
 - the checkout lives at `~/.config/nix`
 - the machine is `aarch64-darwin`
@@ -56,7 +64,7 @@ Install Homebrew once before the first rebuild. This config uses `nix-homebrew`,
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Apply the flake for the first time:
+Apply the macOS flake for the first time:
 
 ```zsh
 nix run nix-darwin --extra-experimental-features "nix-command flakes" -- switch --flake ~/.config/nix#speediest
@@ -68,6 +76,53 @@ After the first successful switch, use:
 darwin-rebuild switch --flake ~/.config/nix#speediest
 ```
 
+## Linux Setup
+
+The Linux Home Manager profile assumes:
+
+- the checkout lives at `~/.config/nix`
+- the user is `cdmwebs`
+- the target uses `x86_64-linux`
+
+Clone the repo first:
+
+```zsh
+git clone git@github.com:cdmwebs/nix-config.git ~/.config/nix
+cd ~/.config/nix
+```
+
+On Debian, install Nix first if it is not already present:
+
+```zsh
+sh <(curl -L https://nixos.org/nix/install)
+```
+
+Then load Nix into the current shell without logging out:
+
+```zsh
+. ~/.nix-profile/etc/profile.d/nix.sh
+```
+
+Make sure flakes are enabled. Create `~/.config/nix/nix.conf` if it does not exist, then add:
+
+```text
+experimental-features = nix-command flakes
+```
+
+or pass `--extra-experimental-features "nix-command flakes"` on the command line while bootstrapping. `nix.conf` is gitignored in this repo, so it can live in the checkout without showing up as a local change.
+
+For a first-time standalone Home Manager bootstrap on Debian, use:
+
+```zsh
+nix run github:nix-community/home-manager -- switch --flake ~/.config/nix#cdmwebs
+```
+
+After that first activation, the `home-manager` command will be installed and you can use:
+
+```zsh
+home-manager switch --flake ~/.config/nix#cdmwebs
+```
+
 ## Setup Notes
 
 - The first rebuild can take a while. It may install Homebrew formulae, casks, and Mac App Store apps.
@@ -75,10 +130,11 @@ darwin-rebuild switch --flake ~/.config/nix#speediest
 - Some steps will prompt for `sudo`.
 - `Ghostty` is installed via Homebrew cask.
 - Home Manager is wired into the same `darwin-rebuild switch`, so there is no separate `home-manager switch` flow here.
+- On Debian/Linux, Home Manager runs standalone, so `home-manager switch --flake` is the normal apply path.
 
 ## Daily Use
 
-After editing the config, apply changes with:
+After editing the macOS config, apply changes with:
 
 ```zsh
 darwin-rebuild switch --flake ~/.config/nix#speediest
@@ -88,6 +144,12 @@ There is also a shell alias in [home/zsh.nix](./home/zsh.nix) for this:
 
 ```zsh
 switch
+```
+
+On Linux, the same alias maps to:
+
+```zsh
+home-manager switch --flake ~/.config/nix#cdmwebs
 ```
 
 If you just want to validate evaluation before switching:
@@ -116,6 +178,12 @@ Then review and apply:
 git diff flake.lock
 nix flake check --no-build
 darwin-rebuild switch --flake ~/.config/nix#speediest
+```
+
+For Linux-only changes, swap the last command for:
+
+```zsh
+home-manager switch --flake ~/.config/nix#cdmwebs
 ```
 
 ## Neovim
