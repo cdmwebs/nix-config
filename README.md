@@ -13,7 +13,6 @@ The current target is Apple Silicon macOS (`aarch64-darwin`) for user `cdmwebs`.
 - [flake.nix](./flake.nix): flake inputs and the `speediest` host definition
 - [darwin.nix](./darwin.nix): system-level macOS, Nix, fonts, Homebrew, and `/Applications/Nix Apps`
 - [home.nix](./home.nix): user-level CLI packages and Home Manager defaults
-- [home/alacritty.nix](./home/alacritty.nix): Alacritty config
 - [home/git.nix](./home/git.nix): Git config and signing
 - [home/tmux.nix](./home/tmux.nix): tmux config
 - [home/zsh.nix](./home/zsh.nix): Zsh config
@@ -74,7 +73,7 @@ darwin-rebuild switch --flake ~/.config/nix#speediest
 - The first rebuild can take a while. It may install Homebrew formulae, casks, and Mac App Store apps.
 - Mac App Store installs require being signed into the App Store first.
 - Some steps will prompt for `sudo`.
-- `Alacritty` is installed via Nix and linked into `/Applications/Nix Apps`.
+- `Ghostty` is installed via Homebrew cask.
 - Home Manager is wired into the same `darwin-rebuild switch`, so there is no separate `home-manager switch` flow here.
 
 ## Daily Use

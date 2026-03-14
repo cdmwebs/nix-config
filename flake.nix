@@ -48,7 +48,6 @@
                 verbose = true;
                 users.cdmwebs.imports = [
                   ./home.nix
-                  ./home/alacritty.nix
                   ./home/git.nix
                   ./home/tmux.nix
                   ./home/zsh.nix
