@@ -17,11 +17,11 @@ The current target is Apple Silicon macOS (`aarch64-darwin`) for user `cdmwebs`.
 - [home/git.nix](./home/git.nix): Git config and signing
 - [home/tmux.nix](./home/tmux.nix): tmux config
 - [home/zsh.nix](./home/zsh.nix): Zsh config
-- [home/nixvim.nix](./home/nixvim.nix): current Neovim config
+- [nvim/](./nvim): repo-managed LazyVim config
 
 Package-management split:
 
-- Nix/Home Manager: CLI tools, shell config, terminal tools, fonts, Neovim binary
+- Nix/Home Manager: CLI tools, shell config, terminal tools, fonts, Neovim binary, and the checked-in `nvim/` config
 - Homebrew: GUI apps, Mac App Store installs, and a few toolchain dependencies expected under `/opt/homebrew`
 
 ## Initial Setup
@@ -119,8 +119,26 @@ nix flake check --no-build
 darwin-rebuild switch --flake ~/.config/nix#speediest
 ```
 
+## Neovim
+
+Neovim is installed through Home Manager, but the actual editor config now lives in [nvim/](./nvim) and is managed as a normal LazyVim setup.
+
+What that means in practice:
+
+- Nix installs Neovim and supporting CLI tools like `fd`, `ripgrep`, `nixd`, `nixfmt`, and `stylua`
+- Home Manager links `~/.config/nvim` to this repo's [nvim/](./nvim) directory using an out-of-store symlink
+- `lazy.nvim` bootstraps itself on first launch
+- LazyVim manages plugins inside Neovim instead of this repo trying to declare every plugin in Nix
+- `:Lazy` can write files like `lazy-lock.json` because the config path is now writable
+
+If `~/.config/nvim` already exists as a real directory, move it out of the way before switching so Home Manager can create the managed link:
+
+```zsh
+mv ~/.config/nvim ~/.config/nvim.pre-lazyvim
+darwin-rebuild switch --flake ~/.config/nix#speediest
+```
+
 ## Notes
 
 - `nixpkgs` tracks `nixpkgs-unstable`, so updates can be broad.
 - `darwin-rebuild switch` will warn if the git tree is dirty. That is expected when testing local changes.
-- This repo still includes a `nixvim` module today. If Neovim moves fully to LazyVim later, the README should be updated again.

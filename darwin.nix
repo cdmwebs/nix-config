@@ -10,7 +10,6 @@
     # Keep GUI apps here so the activation script can link them into /Applications.
     pkgs.alacritty
     pkgs.mkalias
-    pkgs.neovim
   ];
 
   fonts.packages = [

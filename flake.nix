@@ -16,10 +16,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -28,12 +24,10 @@
       nix-darwin,
       nix-homebrew,
       home-manager,
-      nixvim,
       nixpkgs,
     }:
     {
       darwinConfigurations = {
-        imports = [ <home-manager/nix-darwin> ];
         speediest = nix-darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [
@@ -55,7 +49,6 @@
                 verbose = true;
                 users.cdmwebs.imports = [
                   ./home.nix
-                  nixvim.homeModules.nixvim
                   ./home/alacritty.nix
                   ./home/git.nix
                   ./home/tmux.nix

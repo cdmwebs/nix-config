@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   home.stateVersion = "23.05"; # Please read the comment before changing.
@@ -8,11 +8,13 @@
   home.packages = with pkgs; [
     coreutils
     doctl
+    fd
     nixd
     nixfmt-rfc-style
     powerline
     ripgrep
     rsync
+    stylua
     tree
     tmux-mem-cpu-load
   ];
@@ -20,6 +22,12 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = { };
+
+  xdg = {
+    enable = true;
+    configFile."nvim".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nix/nvim";
+  };
 
   home.sessionVariables = {
     VISUAL = "nvim";
@@ -45,6 +53,12 @@
   # Let Home Manager install and manage itself.
   programs = {
     home-manager.enable = true;
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+    };
 
     mise = {
       enable = true;
