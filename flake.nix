@@ -20,11 +20,10 @@
 
   outputs =
     {
-      self,
       nix-darwin,
       nix-homebrew,
       home-manager,
-      nixpkgs,
+      ...
     }:
     {
       darwinConfigurations = {
@@ -58,9 +57,6 @@
             }
           ];
         };
-
       };
-      # Expose the package set, including overlays, for convenience.
-      darwinPackages = self.darwinConfigurations.speediest.pkgs;
     };
 }
