@@ -1,9 +1,8 @@
 { pkgs, ... }:
 {
-  # Keep GUI apps here so the activation script can link them into /Applications.
+  # Keep GUI apps here so the activation script can copy them into /Applications.
   environment.systemPackages = [
     pkgs.alacritty
-    pkgs.mkalias
   ];
 
   fonts.packages = [
