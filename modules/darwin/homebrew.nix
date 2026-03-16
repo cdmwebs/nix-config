@@ -29,6 +29,7 @@
       "ngrok"
       "orbstack"
       "pop-app"
+      "qlmarkdown"
       "slack"
       "tableplus"
       "vlc"
