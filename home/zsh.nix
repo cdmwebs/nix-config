@@ -29,6 +29,8 @@
             fi
           done
         }
+
+        [[ -f "$HOME/.config/zsh/private.env" ]] && source "$HOME/.config/zsh/private.env"
       '';
 
       shellAliases = {
