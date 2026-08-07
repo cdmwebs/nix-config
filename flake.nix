@@ -4,9 +4,13 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    brew-src = {
+      url = "github:Homebrew/brew";
+      flake = false;
+    };
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
-      inputs.brew-src.url = "github:Homebrew/brew/5.0.2";
+      inputs.brew-src.follows = "brew-src";
     };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
