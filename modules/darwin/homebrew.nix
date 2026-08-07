@@ -2,6 +2,8 @@
   homebrew = {
     enable = true;
 
+    onActivation.upgrade = true;
+
     # Keep Homebrew focused on GUI apps, App Store installs, and toolchain
     # dependencies that non-Nix tooling often expects under /opt/homebrew.
     brews = [
