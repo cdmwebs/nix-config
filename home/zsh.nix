@@ -15,8 +15,15 @@
         ZSHZ_CASE = "smart";
       };
 
+      profileExtra = ''
+        # OrbStack command-line tools and integration
+        source "$HOME/.orbstack/shell/init.zsh" 2>/dev/null || :
+        export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
+      '';
+
       initContent = ''
         export CLICOLOR=1
+        export PATH="$HOME/.mtplx/bin:$PATH"
 
         list_ssh_fingerprints() {
           for key in ~/.ssh/*.pub; do
@@ -30,7 +37,7 @@
           done
         }
 
-        [[ -f "$HOME/.config/zsh/private.env" ]] && source "$HOME/.config/zsh/private.env"
+        [[ -f "$HOME/.config/zsh/private.zsh" ]] && source "$HOME/.config/zsh/private.zsh"
       '';
 
       shellAliases = {
